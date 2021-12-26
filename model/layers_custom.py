@@ -154,12 +154,15 @@ class Diagonal(Layer):
     def call(self, x, mask=None):
         n_features = x._keras_shape[1]
         print('input dimensions {}'.format(x._keras_shape))
-
+        print('This is K', K)
+        print('Type of K', type(K))
         kernel = K.reshape(self.kernel, (1, n_features))
         mult = x * kernel
-        mult = K.reshape(mult, (-1, self.n_inputs_per_node))
+        print('This is mult', mult)
+        print('This is n_inputs_per_node', self.n_inputs_per_node)
+        mult = K.reshape(mult, [-1, self.n_inputs_per_node])
         mult = K.sum(mult, axis=1)
-        output = K.reshape(mult, (-1, self.units))
+        output = K.reshape(mult, [-1, self.units])
 
         if self.use_bias:
             output = K.bias_add(output, self.bias)

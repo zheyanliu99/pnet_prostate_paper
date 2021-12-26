@@ -35,9 +35,9 @@ def elapsed_time(start_time, end_time):
 params_file_list = []
 
 # pnet
-params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing')
+# params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing')
 # params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing_inner')
-# params_file_list.append('./pnet/crossvalidation_average_reg_10_tanh')
+params_file_list.append('./pnet/crossvalidation_average_reg_10_tanh')
 #
 # # other ML models
 # params_file_list.append('./compare/onsplit_ML_test')
@@ -98,7 +98,7 @@ for params_file in params_file_list:
     params_file = join(POSTATE_PARAMS_PATH, params_file)
     logging.info('random seed %d' % random_seed)
     params_file_full = params_file + '.py'
-    print params_file_full
+    print(params_file_full)
     params = imp.load_source(params_file, params_file_full)
 
     DebugFolder(log_dir)
