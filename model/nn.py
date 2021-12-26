@@ -166,7 +166,7 @@ class Model(BaseEstimator):
 
     def get_th(self, y_validate, pred_scores):
         thresholds = np.arange(0.1, 0.9, 0.01)
-        print thresholds
+        print(thresholds)
         scores = []
         for th in thresholds:
             y_pred = pred_scores > th
@@ -182,7 +182,7 @@ class Model(BaseEstimator):
             score['th'] = th
             scores.append(score)
         ret = pd.DataFrame(scores)
-        print ret
+        print(ret)
         best = ret[ret.f1 == max(ret.f1)]
         th = best.th.values[0]
         return th
@@ -291,7 +291,7 @@ class Model(BaseEstimator):
                 else:
                     prediction_scores = prediction_scores[-1]
 
-        print np.array(prediction_scores).shape
+        print(np.array(prediction_scores).shape)
         return np.array(prediction_scores)
 
     def predict_proba(self, X_test):
@@ -303,7 +303,7 @@ class Model(BaseEstimator):
         ret = np.ones((n_samples, 2))
         ret[:, 0] = 1. - prediction_scores.ravel()
         ret[:, 1] = prediction_scores.ravel()
-        print ret.shape
+        print(ret.shape)
         return ret
 
     def score(self, x_test, y_test):

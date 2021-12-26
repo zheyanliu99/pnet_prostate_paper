@@ -53,8 +53,8 @@ def plot_stacked(ax, filename, correct, wrong):
     xpos = [0, 2]
     width = [1.0, 1.0]
 
-    print percent1
-    print percent2
+    print(percent1)
+    print(percent2)
     bottom = [percent1[0], percent2[0]]
     top = [percent1[1], percent2[1]]
     ORANGE = (255 / 256., 127 / 256., 0, 1.0)
@@ -102,7 +102,7 @@ def plot_stacked(ax, filename, correct, wrong):
     table_props = table.properties()
     table_cells = table_props['child_artists']
     for i, cell in enumerate(table_cells):
-        print i
+        # print i
         if i in [6]:
             cell.get_text().set_fontsize(20)
             cell.get_text().set_color('w')

@@ -1,4 +1,4 @@
-import cPickle
+import _pickle as cPickle
 import logging
 import os
 import time
@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 
 
 def save_model(model, filename):
-    print 'saving model in', filename
+    print('saving model in', filename)
     f = file(filename + '.pkl', 'wb')
     import sys
     sys.setrecursionlimit(100000)

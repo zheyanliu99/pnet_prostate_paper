@@ -72,13 +72,13 @@ def plot_prc_all(ax):
 
     sorted_dict = sorted(sorted_dict.items(), key=lambda kv: kv[1])
     sorted_dict = collections.OrderedDict(sorted_dict)
-    print 'sorted_dict', sorted_dict
+    print('sorted_dict', sorted_dict)
 
     for i, k in enumerate(sorted_dict.keys()):
         df = all_models_dict[k]
         y_test = df['y']
         y_pred_score = df['pred_scores']
-        print i, k
+        print(i, k)
         plot_prc(ax, y_test, y_pred_score, None, label=k, color=colors[i])
 
     f_scores = np.linspace(0.2, 0.8, num=4)
@@ -128,7 +128,7 @@ def plot_confusion_matrix_all(ax):
     y_t = df.y
     y_pred_test = df.pred
     cnf_matrix = confusion_matrix(y_t, y_pred_test)
-    print cnf_matrix
+    print(cnf_matrix)
 
     cm = np.array(cnf_matrix)
     classes = ['Primary', 'Metastatic']
@@ -142,7 +142,7 @@ def plot_confusion_matrix_all(ax):
 
 
 def get_predictions(filename, correct_prediction=True):
-    print filename
+    print(filename)
     df = pd.read_csv(filename, index_col=0)
     if correct_prediction:
         df.pred = df.pred_scores >= 0.5
@@ -164,14 +164,14 @@ def plot_surv(ax, filename, correct_prediction, ci_show):
     labels = ['LPS', 'HPS']
     clinical_df = get_clinical()
     df, correct, wrong = get_predictions(filename, correct_prediction)
-    print correct.shape, wrong.shape
+    print(correct.shape, wrong.shape)
     correct_full = clinical_df.merge(correct, how='inner', left_on='Patient.ID', right_index=True)
     wrong_full = clinical_df.merge(wrong, how='inner', left_on='Patient.ID', right_index=True)
 
     wrong_full = wrong_full.dropna(subset=['PFS.time', 'PFS'])
     correct_full = correct_full.dropna(subset=['PFS.time', 'PFS'])
-    print correct_full.shape
-    print wrong_full.shape
+    print(correct_full.shape)
+    print(wrong_full.shape)
 
     data = correct_full
     T1 = data['PFS.time'] / 30
@@ -191,7 +191,7 @@ def plot_surv(ax, filename, correct_prediction, ci_show):
     for x in ax.get_xticks():
         if x >= 0:
             newxticks += [x]
-        print newxticks
+        print(newxticks)
         ax.set_xticks(newxticks)
 
     # add_at_risk_counts_CUSTOM(kmf1, kmf2, ax=ax, fontsize=fontsize, labels=['LMS','HMS'])
@@ -333,7 +333,7 @@ def plot_pnet_vs_dense_with_ratio(ax, c, label, plot_ratio=False):
     df_dense_sameweights = get_dense_sameweights(c)
     df_pnet = get_pnet_preformance(col=c)
     pvalues = get_stats(df_pnet, df_dense_sameweights)
-    print c, zip(pvalues, sizes)
+    print(c, zip(pvalues, sizes))
     plot_compaison(ax, label, df_pnet, df_dense_sameweights, sizes, linewidth)
     ax.set_ylabel(label, fontproperties, labelpad=1)
     ax.legend(['P-NET', 'Dense'], fontsize=fontsize, loc='upper left', framealpha=0)
@@ -341,7 +341,7 @@ def plot_pnet_vs_dense_with_ratio(ax, c, label, plot_ratio=False):
     y1 = df_pnet.mean()
     y2 = df_dense_sameweights.mean()
     height = map(max, zip(y1, y2))
-    print 'height', height
+    print('height', height)
     updated_values = []
     for i, (p, s) in enumerate(zip(pvalues, sizes)):
         if p >= 0.05:

@@ -35,7 +35,7 @@ class DataModelLoader():
     def load_model(self, model_dir_, model_name):
         # 1 - load architecture
         params_filename = join(model_dir_, model_name + '_params.yml')
-        stream = file(params_filename, 'r')
+        stream = open(params_filename, 'r')
         params = yaml.load(stream)
         # print params
         # fs_model = model_factory.get_model(params['model_params'][0])
@@ -46,7 +46,7 @@ class DataModelLoader():
         return model
 
     def load_parmas(self, params_filename):
-        stream = file(params_filename, 'r')
+        stream = open(params_filename, 'r')
         params = yaml.load(stream, Loader=yaml.UnsafeLoader)
         model_parmas = params['model_params']
         data_parmas = params['data_params']

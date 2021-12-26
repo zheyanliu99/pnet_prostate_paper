@@ -78,8 +78,8 @@ def plot_(df_pnet, df_dense):
     ratio = (y1.values - y2.values) / y2.values
     pvalues = get_stats(df_pnet, df_dense)
 
-    print zip(sizes, ratio)
-    print zip(sizes, pvalues)
+    print(zip(sizes, ratio))
+    print(zip(sizes, pvalues))
 
     bar_width = 25
     fontsize = 10
@@ -109,11 +109,11 @@ sizes = []
 for i in range(0, 20, 3):
     df_split = pd.read_csv(join(PROSTATE_DATA_PATH, 'splits/training_set_{}.csv'.format(i)), index_col=0)
     sizes.append(df_split.shape[0])
-print sizes
+print(sizes)
 
 
 def get_stats(df_pnet, df_dense):
-    print df_pnet.shape, df_dense.shape
+    print(df_pnet.shape, df_dense.shape)
     pvalues = []
     for c1, c2 in zip(df_pnet.columns, df_dense.columns):
         # print c
@@ -122,7 +122,7 @@ def get_stats(df_pnet, df_dense):
 
         twosample_results = stats.ttest_ind(x, y)
         pvalue = twosample_results[1] / 2
-        print pvalue
+        print(pvalue)
         pvalues.append(pvalue)
     return pvalues
 
@@ -154,14 +154,14 @@ def plot_pnet_vs_dense_with_ratio(ax, c, label, plot_ratio=False):
     df_dense_sameweights = get_dense_sameweights(c)
     df_pnet = get_pnet_preformance(col=c)
     pvalues = get_stats(df_pnet, df_dense_sameweights)
-    print c, zip(pvalues, sizes)
+    print(c, zip(pvalues, sizes))
     plot_compaison(ax, label, df_pnet, df_dense_sameweights)
     # ax.legend(ax.legend.text, loc= 'upper left')
 
     y1 = df_pnet.mean()
     y2 = df_dense_sameweights.mean()
     height = map(max, zip(y1, y2))
-    print 'height', height
+    print('height', height)
     updated_values = []
     for i, (p, s) in enumerate(zip(pvalues, sizes)):
         if p >= 0.05:
@@ -226,8 +226,8 @@ def plot_pnet_vs_dense_ratio(ax2, c='auc'):
 
     ratio = (y1.values - y2.values) / y2.values
     pvalues = get_stats(df_pnet, df_dense)
-    print zip(sizes, ratio)
-    print zip(sizes, pvalues)
+    print(zip(sizes, ratio))
+    print(zip(sizes, pvalues))
 
     bar_width = 30
     fontsize = 10

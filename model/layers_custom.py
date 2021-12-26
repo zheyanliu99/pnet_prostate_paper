@@ -60,7 +60,7 @@ class AttLayer(Layer):
         return weighted_input
 
     def compute_output_shape(self, input_shape):
-        print 'AttLayer input_shape', input_shape
+        print('AttLayer input_shape', input_shape)
         return (input_shape[0], input_shape[-1])
         # return (input_shape[0])
 
@@ -122,9 +122,9 @@ class Diagonal(Layer):
         # Create a trainable weight variable for this layer.
         input_dimension = input_shape[1]
         self.kernel_shape = (input_dimension, self.units)
-        print 'input dimension {} self.units {}'.format(input_dimension, self.units)
+        print('input dimension {} self.units {}'.format(input_dimension, self.units))
         self.n_inputs_per_node = input_dimension / self.units
-        print 'n_inputs_per_node {}'.format(self.n_inputs_per_node)
+        print('n_inputs_per_node {}'.format(self.n_inputs_per_node))
 
         rows = np.arange(input_dimension)
         cols = np.arange(self.units)
@@ -132,7 +132,7 @@ class Diagonal(Layer):
         self.nonzero_ind = np.column_stack((rows, cols))
 
         # print 'self.nonzero_ind', self.nonzero_ind
-        print 'self.kernel_initializer', self.W_regularizer, self.kernel_initializer, self.kernel_regularizer
+        print('self.kernel_initializer', self.W_regularizer, self.kernel_initializer, self.kernel_regularizer)
         self.kernel = self.add_weight(name='kernel',
                                       shape=(input_dimension,),
                                       # initializer='uniform',
@@ -153,7 +153,7 @@ class Diagonal(Layer):
 
     def call(self, x, mask=None):
         n_features = x._keras_shape[1]
-        print 'input dimensions {}'.format(x._keras_shape)
+        print('input dimensions {}'.format(x._keras_shape))
 
         kernel = K.reshape(self.kernel, (1, n_features))
         mult = x * kernel
@@ -373,9 +373,9 @@ class SpraseLayerTF(Layer):
     def build(self, input_shape):
         # Create a trainable weight variable for this layer.
         input_dimension = input_shape[1]
-        print 'input dimension {}'.format(input_dimension)
+        print('input dimension {}'.format(input_dimension))
         self.n_inputs_per_node = input_dimension / self.units
-        print 'n_inputs_per_node {}'.format(self.n_inputs_per_node)
+        print('n_inputs_per_node {}'.format(self.n_inputs_per_node))
 
         self.kernel = self.add_weight(name='kernel',
                                       shape=(input_dimension,),
@@ -399,7 +399,7 @@ class SpraseLayerTF(Layer):
 
         n_features = x._keras_shape[1]
 
-        print 'input dimensions {}'.format(x._keras_shape)
+        print('input dimensions {}'.format(x._keras_shape))
         kernel = K.reshape(self.kernel, (1, n_features))
 
         mult = x * kernel
@@ -452,7 +452,7 @@ class SpraseLayerWithConnection(Layer):
     def build(self, input_shape):
         # Create a trainable weight variable for this layer.
         input_dimension = input_shape[1]
-        print 'input dimension {}'.format(input_dimension)
+        print('input dimension {}'.format(input_dimension))
 
         # self.n_inputs_per_node = input_dimension/ self.units
         # print 'n_inputs_per_node {}'.format(self.n_inputs_per_node)
@@ -499,15 +499,15 @@ class SpraseLayerWithConnection(Layer):
 
     def call(self, x, mask=None):
         n_inputs, n_outputs = self.mapp.shape
-        print K.int_shape(x)
+        print(K.int_shape(x))
         output_list = []
         for i in range(n_outputs):
             # print self.edges[i]
             # print K.int_shape(x) , K.int_shape(self.kernel[i])
             # y0 =  x[:, self.edges[i]].dot(self.kernel[i].T)
-            print 'iter {}, weights shape {}, # connections {}'.format(i, K.int_shape(self.kernel[i]),
-                                                                       len(self.edges[i]))
-            print 'connections', self.edges[i]
+            print('iter {}, weights shape {}, # connections {}'.format(i, K.int_shape(self.kernel[i]),
+                                                                       len(self.edges[i])))
+            print('connections', self.edges[i])
             w = self.kernel[i].T
             inn = x[:, self.edges[i]]
             y0 = K.dot(inn, w)
@@ -536,7 +536,8 @@ class SpraseLayerWithConnection(Layer):
         #     output = K.bias_add(output, self.bias)
         # if self.activation is not None:
         #     output = self.activation(output)
-        print 'conactenating '
+        # print('conactenating')
+        print('concatenating')
         output = K.concatenate(output_list, axis=-1)
         output = K.reshape(output, (-1, self.units))
         # output = concatenate(output)
@@ -561,7 +562,7 @@ class RandomWithMap(Initializer):
         map_sparse = csr_matrix(self.map)
         # init = np.random.rand(*map_sparse.data.shape)
         init = np.random.normal(10.0, 1., *map_sparse.data.shape)
-        print 'connection map data shape {}'.format(map_sparse.data.shape)
+        print('connection map data shape {}'.format(map_sparse.data.shape))
         # init = np.random.randn(*map_sparse.data.shape).astype(np.float32) * np.sqrt(2.0 / (map_sparse.data.shape[0]))
         initializers.glorot_uniform().__call__()
         map_sparse.data = init
